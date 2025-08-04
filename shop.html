@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Velvet Vogue - Shop</title>
+  <link rel="stylesheet" href="shop.css">
+
+</head>
+<body>
+
+<header>
+  <h1>🛍 Velvet Vogue - Products</h1>
+  <a href="cart.html">🛒 View Cart</a>
+</header>
+
+<nav class="navbar">
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="Login.html">Login</a></li>
+    <li><a href="shop.html" class="active">Shop</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="aboutus.html">About Us</a></li>
+  </ul>
+</nav>
+
+<!-- Filter Section -->
+<form class="filter-form" onsubmit="event.preventDefault(); applyFilters();">
+  <label>Category:
+    <select id="filter-category">
+      <option value="">All</option>
+      <option value="Winter">Winter</option>
+      <option value="Summer">Summer</option>
+      <option value="Formal">Formal</option>
+      <option value="Causal">Causal</option>
+      <option value="Accessories">Accessories</option>
+    </select>
+  </label>
+
+  <label>Size:
+    <select id="filter-size">
+      <option value="">All</option>
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+    </select>
+  </label>
+
+  <label>Gender:
+    <select id="filter-gender">
+      <option value="">All</option>
+      <option value="Men">Men</option>
+      <option value="Women">Women</option>
+      <option value="Unisex">Unisex</option>
+    </select>
+  </label>
+
+  <button type="submit">Apply Filter</button>
+</form>
+
+<!-- Product Grid -->
+<div class="product-grid" id="productGrid">
+  <!-- Filled by JavaScript -->
+</div>
+
+<script>
+  const products = [
+    {
+      id: 1,
+      name: "Wool Coat",
+      price: 89.99,
+      image: "p1.jpg",
+      category: "Winter",
+      size: "M",
+      gender: "Women"
+    },
+    {
+      id: 2,
+      name: "Linen Shirt",
+      price: 39.99,
+      image: "p2.jpg",
+      category: "Summer",
+      size: "L",
+      gender: "Men"
+    },
+    {
+      id: 3,
+      name: "Formal Blazer",
+      price: 19.99,
+      image: "p3.jpg",
+      category: "Formal",
+      size: "All",
+      gender: "Men"
+    },
+    {
+      id: 4,
+      name: "Smart Causal",
+      price: 89.99,
+      image: "p5.jpg",
+      category: "Causal",
+      size: "All",
+      gender: "Men"
+    }
+	
+  ];
+
+  function displayProducts(filtered = products) {
+    const grid = document.getElementById("productGrid");
+    grid.innerHTML = "";
+
+    filtered.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>Price: $${product.price.toFixed(2)}</p>
+        <p>Category: ${product.category}</p>
+        <p>Size: ${product.size} | Gender: ${product.gender}</p>
+        <form>
+          <button type="button">Add to Cart</button>
+        </form>
+        <a href="product.html?id=${product.id}">View Product</a>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function applyFilters() {
+    const category = document.getElementById("filter-category").value;
+    const size = document.getElementById("filter-size").value;
+    const gender = document.getElementById("filter-gender").value;
+
+    const filtered = products.filter(p =>
+      (!category || p.category === category) &&
+      (!size || p.size === size) &&
+      (!gender || p.gender === gender)
+    );
+
+    displayProducts(filtered);
+  }
+
+  // Initial load
+  displayProducts();
+</script>
+
+</body>
+</html>
